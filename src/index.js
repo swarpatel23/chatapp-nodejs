@@ -8,6 +8,7 @@ const {
   generateLocationMessage,
 } = require("./utils/messages");
 
+const rooms = new Map();
 const { addUser, removeUser, getUser, getUserInRoom } = require("./utils/user");
 
 const app = express();
@@ -28,6 +29,14 @@ io.on("connection", (socket) => {
     if (error) {
       return callback(error);
     }
+    //incrementing count in room.
+    if (rooms.has(user.room)) {
+      rooms.set(user.room, rooms.get(user.room) + 1);
+    } else {
+      rooms.set(user.room, 1);
+    }
+    console.log(rooms);
+
     socket.join(user.room);
 
     socket.emit("message", generateMessage("Admin", "Welcome to chatapp"));
@@ -41,6 +50,9 @@ io.on("connection", (socket) => {
     callback();
   });
 
+  socket.on("roomsdetail", () => {
+    socket.emit("roomcnt", rooms);
+  });
   socket.on("clientmsg", (msg, callback) => {
     const filter = new Filter();
     if (filter.isProfane(msg)) {
@@ -59,6 +71,16 @@ io.on("connection", (socket) => {
         "message",
         generateMessage("Admin", `${user.username} is left`)
       );
+
+      //decrementing count of user from room
+      if (rooms.get(user.room) == 0) {
+        rooms.delete(user.room);
+      } else {
+        rooms.set(user.room, rooms.get(user.room) - 1);
+      }
+
+      console.log(rooms);
+
       io.to(user.room).emit("roomData", {
         room: user.room,
         users: getUserInRoom(user.room),
