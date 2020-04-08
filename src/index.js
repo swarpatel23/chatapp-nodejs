@@ -3,6 +3,7 @@ const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
 const Filter = require("bad-words");
+const api = require("./api");
 const {
   generateMessage,
   generateLocationMessage,
@@ -12,6 +13,8 @@ const rooms = new Map();
 const { addUser, removeUser, getUser, getUserInRoom } = require("./utils/user");
 
 const app = express();
+app.use("/api", api);
+
 const server = http.createServer(app);
 const io = socketio(server);
 
@@ -73,7 +76,7 @@ io.on("connection", (socket) => {
       );
 
       //decrementing count of user from room
-      if (rooms.get(user.room) == 0) {
+      if (rooms.get(user.room) == 1) {
         rooms.delete(user.room);
       } else {
         rooms.set(user.room, rooms.get(user.room) - 1);
@@ -96,6 +99,11 @@ io.on("connection", (socket) => {
     );
     callback("location is shared successfully with everyone");
   });
+});
+
+app.get("/getRoomsDetails", (req, res) => {
+  //console.log(rooms.size);
+  res.send(JSON.stringify([...rooms]));
 });
 
 server.listen(port, () => {
