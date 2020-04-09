@@ -14,10 +14,40 @@
         <div id="messages" class="chat__messages"></div>
         <div class="compose">
           <form id="message-form">
-            <input name="message" id="text" type="text" autocomplete="off" />
-            <button id="btn">Submit</button>
+            <input
+              name="message"
+              id="text"
+              type="text"
+              autocomplete="off"
+              style="
+                border-radius: 15px;
+                box-shadow: 3px 5px 2px 0px rgba(0, 0, 0, 0.3) inset,
+                  -1px -3px 10px 0px rgba(250, 250, 250, 0.3) inset;
+              "
+            />
+            <button
+              id="btn"
+              style="
+                border-radius: 10px;
+                box-shadow: 3px 5px 2px 0px rgba(0, 0, 0, 0.3),
+                  -1px -3px 10px 0px rgba(250, 250, 250, 0.3);
+                border-style: none;
+              "
+            >
+              Submit
+            </button>
           </form>
-          <button id="send-location">Send Location</button>
+          <button
+            id="send-location"
+            style="
+              border-radius: 10px;
+              box-shadow: 3px 5px 2px 0px rgba(0, 0, 0, 0.3),
+                -1px -3px 10px 0px rgba(250, 250, 250, 0.3);
+              border-style: none;
+            "
+          >
+            Send Location
+          </button>
         </div>
       </div>
     </div>
@@ -25,7 +55,10 @@
     <div id="messages"></div>
 
     <script id="message-template" type="text/html">
-      <div class="message">
+      <div class="message" style="border-radius: 10px;
+                  box-shadow: 3px 5px 2px 0px rgba(0, 0, 0, 0.3),
+                    -1px -3px 10px 0px rgba(250, 250, 250, 0.3);
+                  border-style: none; width: max-content;padding:10px;">
         <p>
           <span classs="message__name">{{username}}</span>
           <span class="message__meta">{{createdAt}}</span>
@@ -35,7 +68,10 @@
     </script>
 
     <script id="message-location-template" type="text/html">
-      <div class="message">
+      <div class="message" style="border-radius: 10px;
+                  box-shadow: 3px 5px 2px 0px rgba(0, 0, 0, 0.3),
+                    -1px -3px 10px 0px rgba(250, 250, 250, 0.3);
+                  border-style: none; width: max-content;padding:10px;">
        <p>
           <span classs="message__name">{{username}}</span>
           <span class="message__meta">{{createdAt}}</span>
@@ -45,13 +81,15 @@
     </script>
 
     <script id="sidebar-template" type="text/html">
-      <h2 class="room-title">{{room}}</h2>
-      <h3 class="list-title">Users</h3>
-      <ul class="users">
-          {{#users}}
-          <li>{{username}}</li>
-          {{/users}}
-      </ul>
+            <h2 class="room-title">{{room}}</h2>
+            <h3 class="list-title">Users</h3>
+            <ul class="users">
+                {{#users}}
+                <li style="background: #333744;
+      box-shadow:  -5px 5px 7px #282b35,
+                   5px -5px 7px #3e4353;border-radius:5px;padding:7px;">{{username}}</li>
+                {{/users}}
+            </ul>
     </script>
     <div id="interact"></div>
 
