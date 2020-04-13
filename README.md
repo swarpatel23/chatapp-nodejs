@@ -12,6 +12,6 @@ To run application your machine follow the below step:
 2. cd chatapp-nodejs
 3. docker build -t chatapp .
 4. docker run -p 3000:3000 chatapp
-5. check on http:localhost:3000
+5. check on http://localhost:3000
 
 DEBUG A CODE, NOT AN ENVIRONMENT
