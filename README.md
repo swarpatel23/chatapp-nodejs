@@ -14,4 +14,4 @@ To run application your machine follow the below step:
 4. docker run -p 3000:3000 chatapp
 5. check on http:localhost:3000
 
-DEBUG THE CODE, NOT A ENVIRONMENT
+DEBUG A CODE, NOT AN ENVIRONMENT
