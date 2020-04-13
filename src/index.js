@@ -3,7 +3,7 @@ const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
 const Filter = require("bad-words");
-const api = require("./api");
+//const api = require("./api");
 const {
   generateMessage,
   generateLocationMessage,
@@ -13,7 +13,7 @@ const rooms = new Map();
 const { addUser, removeUser, getUser, getUserInRoom } = require("./utils/user");
 
 const app = express();
-app.use("/api", api);
+//app.use("/api", api);
 
 const server = http.createServer(app);
 const io = socketio(server);

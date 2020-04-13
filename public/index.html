@@ -96,13 +96,30 @@
               >
                 Join
               </button>
+              <h3 style="color: black; text-align: center; margin-top: 8px;">
+                <!-- OR
+              </h3>
+              <button
+                onclick="stranger_redirect()"
+                type="button"
+                style="
+                  border-radius: 8px;
+                  box-shadow: 3px 5px 2px 0px rgba(0, 0, 0, 0.3),
+                    -1px -3px 10px 0px rgba(250, 250, 250, 0.3);
+                  border-style: none;
+                  margin-top: 10px;
+                "
+              >
+                Chat With Stranger
+              </button> -->
             </form>
+
             <script id="available-rooms" type="text/html">
-              <h3 style="color: black;text-align:center">Room,Active User</h3>
+              <h3 style="color: black;text-align:center">Room - Active User</h3>
               <ul class="users" >
-              {{#data}}
-              <li id="roomdetail" onClick=updateRoomField(event)>{{.}}</li>
-              {{/data}}
+              {{#data.rooms}}
+              <li id="roomdetail" style="margin:5px;" onClick=updateRoomField(event)>{{data.disp}}</li>
+              {{/data.rooms}}
               <br>
               <ul>
             </script>
@@ -120,10 +137,21 @@
                   dataType: "json",
                   contentType: "application/json",
                   success: (rooms) => {
-                    console.log(rooms);
-
+                    //console.log(rooms);
+                    var mrooms = {
+                      rooms: [],
+                      disp: function () {
+                        return this.room_name + " - " + this.count;
+                      },
+                    };
+                    for (var i = 0; i < rooms.length; i++) {
+                      var room = rooms[i];
+                      // console.log(room[0]);
+                      mrooms.rooms.push({ room_name: room[0], count: room[1] });
+                    }
+                    //console.log(mrooms);
                     const html = Mustache.render(availableRooms, {
-                      data: rooms,
+                      data: mrooms,
                     });
                     document
                       .querySelector("#rooms")
@@ -134,7 +162,16 @@
               function updateRoomField(event) {
                 document.querySelector(
                   "#room"
-                ).value = event.target.innerHTML.split(",")[0];
+                ).value = event.target.innerHTML.split(" ")[0];
+              }
+            </script>
+            <script>
+              function stranger_redirect() {
+                window.location.href =
+                  "/chat.html?username=stranger" +
+                  "&room=" +
+                  Date.now() +
+                  "&st:2";
               }
             </script>
           </div>
